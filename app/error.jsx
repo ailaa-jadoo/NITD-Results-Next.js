@@ -1,4 +1,4 @@
-'use client' // Error components must be Client Components
+'use client'
  
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
@@ -19,7 +19,7 @@ export default function Error({ error, reset }) {
       clearTimeout(timeout);
       clearInterval(interval);
     };
-  }, [error]);
+  }, [error, router, secondsRemaining]);
 
   return (
     <div>
