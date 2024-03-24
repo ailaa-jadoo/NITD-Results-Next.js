@@ -42,6 +42,8 @@
 
 // export default handler;
 
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
 const handler = async (req, res) => {
     const { studentID, semNum } = req.query;
 
