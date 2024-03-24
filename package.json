@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "cross-env NODE_TLS_REJECT_UNAUTHORIZED=0 next dev",
     "lint": "next lint"
   },
   "dependencies": {
@@ -15,12 +15,15 @@
     "@nextui-org/kbd": "2.0.25",
     "@nextui-org/link": "2.0.26",
     "@nextui-org/navbar": "2.0.27",
+    "@nextui-org/react": "^2.2.10",
     "@nextui-org/snippet": "2.0.30",
     "@nextui-org/switch": "2.0.25",
     "@nextui-org/system": "2.0.15",
     "@nextui-org/theme": "2.1.17",
     "@react-aria/ssr": "^3.8.0",
     "@react-aria/visually-hidden": "^3.8.6",
+    "@react-hook/media-query": "^1.1.1",
+    "@react-stately/data": "^3.11.2",
     "@types/node": "20.5.7",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
@@ -28,7 +31,7 @@
     "clsx": "^2.0.0",
     "eslint": "8.48.0",
     "eslint-config-next": "14.0.2",
-    "framer-motion": "^10.16.4",
+    "framer-motion": "^10.18.0",
     "intl-messageformat": "^10.5.0",
     "next": "14.0.2",
     "next-themes": "^0.2.1",
@@ -38,5 +41,8 @@
     "tailwind-variants": "^0.1.18",
     "tailwindcss": "3.3.5",
     "typescript": "5.0.4"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
   }
 }
