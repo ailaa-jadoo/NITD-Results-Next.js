@@ -2,25 +2,6 @@
  
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-
-// export default function Error({ error, reset }) {
-//   const router = useRouter()
-
-//   useEffect(() => {
-//     const timeout = setTimeout(() => {
-//       router.push("/");
-//     }, 10000);
-
-//     return () => clearTimeout(timeout);
-//   }, []);
-
-//   return (
-//     <div>
-//       <h2>Something went wrong!</h2>
-//     </div>
-//   )
-// }
-
 export default function Error({ error, reset }) {
   const router = useRouter()
   const [secondsRemaining, setSecondsRemaining] = useState(10);
@@ -38,7 +19,7 @@ export default function Error({ error, reset }) {
       clearTimeout(timeout);
       clearInterval(interval);
     };
-  }, []);
+  }, [error]);
 
   return (
     <div>
