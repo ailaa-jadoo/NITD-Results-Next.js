@@ -24,7 +24,6 @@ export default function Page() {
           <Profile />
         </Suspense>
       </nav>
-      <h1>Dashboard</h1>
     </>
   )
 }
