@@ -1,6 +1,12 @@
 import { Suspense } from 'react'
 import Profile from './profile';
 import {Spinner} from "@nextui-org/react";
+
+export const metadata = {
+	title: {
+		default: "Profile",
+	},
+};
  
 function SearchBarFallback() {
   return(
