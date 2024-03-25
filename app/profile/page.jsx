@@ -181,7 +181,7 @@
 // export const revalidate = 3600
 
 import { Suspense } from 'react'
-import Profile from './Profile';
+import Profile from './profile';
 import {Spinner} from "@nextui-org/react";
  
 function SearchBarFallback() {
