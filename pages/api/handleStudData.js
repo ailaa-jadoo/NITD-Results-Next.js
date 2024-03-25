@@ -30,7 +30,7 @@ const handler = async (req, res) => {
     const fetchUrl = "https://erp.nitdelhi.ac.in/CampusLynxNITD/CounsellingRequest?sid=2002&refor=StudentSeatingMasterService";
 
     try {
-        const response = await fetch(fetchUrl, options);
+        const response = await fetch(fetchUrl, options, { cache: 'force-cache' });
         if (!response.ok) {
             throw new Error('Failed to fetch data');
         }

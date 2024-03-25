@@ -49,3 +49,5 @@ export default function Home() {
         </div>
     )
 }
+
+export const revalidate = 3600

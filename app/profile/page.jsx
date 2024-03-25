@@ -35,21 +35,15 @@ export default function Profile() {
             }
             const data = await response.text();
             setStudentId(data);
-
-            const studentDetail = await fetch(`/api/handleStudData?studentID=${data}`);
-            if (!studentDetail.ok) {
+            
+            const stuDatanSgCg = await fetch(`/api/handleStuDataNSgSg?studentID=${data}`);
+            if (!stuDatanSgCg.ok) {
                 setError(true);
                 throw new Error('Failed to fetch data');
             }
-            const studentData = await studentDetail.json();
+            const stuDatanSgCgRes = await stuDatanSgCg.json();
+            const {studentData, sgcgData} = stuDatanSgCgRes;
             setStudentData(studentData);
-
-            const sgcg = await fetch(`/api/handleSgcgData?studentID=${data}`);
-            if (!sgcg.ok) {
-                setError(true);
-                throw new Error('Failed to fetch data');
-            }
-            const sgcgData = await sgcg.json();
             setStudentSgCgData(sgcgData);
             const semNum = sgcgData.length;
 
@@ -122,7 +116,6 @@ export default function Profile() {
                                             <TableColumn className="px-2 sm:px-3 text-cyan-400 font-bold text-[14px] text-center">SGPA</TableColumn>
                                             <TableColumn className="px-2 sm:px-3 text-cyan-400 font-bold text-[14px] text-center">CGPA</TableColumn>
                                             <TableColumn className="px-2 sm:px-3 text-cyan-400 font-bold text-[14px] text-center">Earned Credits</TableColumn>
-                                            {/* <TableColumn className="px-2 sm:px-3 text-cyan-400 font-bold text-[14px] text-center">Date</TableColumn> */}
                                         </TableHeader>
                                         <TableBody>
                                             {studentSgCgData.map((item, index) => (
@@ -131,7 +124,6 @@ export default function Profile() {
                                                     <TableCell>{item.sgpa_r}</TableCell>
                                                     <TableCell>{item.cgpa_r}</TableCell>
                                                     <TableCell>{item.totalearnedcredit}</TableCell>
-                                                    {/* <TableCell>{item.date1}</TableCell> */}
                                                 </TableRow>
                                             ))}
                                         </TableBody>
@@ -185,3 +177,5 @@ export default function Profile() {
         </div>
     );
 }
+
+export const revalidate = 3600

@@ -1,4 +1,4 @@
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+import fetch from 'node-fetch';
 
 const handler = async (req, res) => {
     const { studentID } = req.query;
@@ -25,17 +25,25 @@ const handler = async (req, res) => {
             'X-Requested-With': 'XMLHttpRequest'
         },
         body: `jdata={"sid":"2002","mname":"ExamSgpaCgpaDetailOfStudent","studentID":"${studentID}","instituteID":"NITDINSD1506A0000001","registrationID":"NITDRETD2208A0000001"}`
-    }
+    };
 
-    const fetchUrl = "https://erp.nitdelhi.ac.in/CampusLynxNITD/CounsellingRequest?sid=2005&refor=StudentSeatingMasterService";
+    const fetchUrl1 = "https://erp.nitdelhi.ac.in/CampusLynxNITD/CounsellingRequest?sid=2002&refor=StudentSeatingMasterService";
+    const fetchUrl2 = "https://erp.nitdelhi.ac.in/CampusLynxNITD/CounsellingRequest?sid=2005&refor=StudentSeatingMasterService";
 
     try {
-        const response = await fetch(fetchUrl, options, { cache: 'force-cache' })
-        if (!response.ok) {
+        const [response1, response2] = await Promise.all([
+            fetch(fetchUrl1, options, { cache: 'force-cache' }),
+            fetch(fetchUrl2, options, { cache: 'force-cache' })
+        ]);
+
+        if (!response1.ok || !response2.ok) {
             throw new Error('Failed to fetch data');
         }
-        const data = await response.json();
-        res.end(JSON.stringify(data));
+
+        const studentData = await response1.json();
+        const sgcgData = await response2.json();
+
+        res.end(JSON.stringify({ studentData, sgcgData }));
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Internal Server Error' });
