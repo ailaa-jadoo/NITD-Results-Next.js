@@ -5,8 +5,8 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-import { Accordion, AccordionItem } from "@nextui-org/react";
-import { Table, TableHeader, TableBody, TableColumn, TableRow, TableCell } from "@nextui-org/react";
+import { Accordion } from '@mantine/core';
+import { Table } from '@mantine/core';
 import { Card, CardBody, Divider } from "@nextui-org/react";
 
 import Shadow from '../../components/Shadow';
@@ -25,6 +25,7 @@ export default function Profile() {
     const [error, setError] = useState(false);
 
     const nums = ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight"]
+    const emoji = ["🙂", "🤔", "😐", "😢", "😭", "🥴", "😵‍💫", "💀"]
 
     const fetchData = async () => {
         try {
@@ -35,23 +36,21 @@ export default function Profile() {
             }
             const data = await response.text();
             setStudentId(data);
-
-            const stuDatanSgCg = await fetch(`/api/handleStuDataNSgSg?studentID=${data}`);
-            if (!stuDatanSgCg.ok) {
+            const [stuDatanSgCg, grades] = await Promise.all([
+                fetch(`/api/handleStuDataNSgSg?studentID=${data}`),
+                fetch(`/api/handleSemGrades?studentID=${data}`)
+            ]);
+            if (!stuDatanSgCg.ok || !grades.ok) {
                 setError(true);
                 throw new Error('Failed to fetch data');
             }
-            const stuDatanSgCgRes = await stuDatanSgCg.json();
+            const [stuDatanSgCgRes, gradesData] = await Promise.all([
+                stuDatanSgCg.json(),
+                grades.json()
+            ]);
             const { studentData, sgcgData } = stuDatanSgCgRes;
             setStudentData(studentData);
             setStudentSgCgData(sgcgData);
-            const semNum = sgcgData.length;
-
-            const grades = await fetch(`/api/handleSemGrades?studentID=${data}&semNum=${semNum}`);
-            if (!grades.ok) {
-                throw new Error('Failed to fetch data');
-            }
-            const gradesData = await grades.json();
             setGradesData(gradesData);
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -126,24 +125,26 @@ export default function Profile() {
                                     </div>
                                     {studentSgCgData.length > 0 && (
 
-                                        <div className="my-2 px-2">
-                                            <Table isStriped className="text-center" >
-                                                <TableHeader className="p-0">
-                                                    <TableColumn className="px-2 sm:px-3 text-cyan-400 font-bold text-[14px] text-center">Semester</TableColumn>
-                                                    <TableColumn className="px-2 sm:px-3 text-cyan-400 font-bold text-[14px] text-center">SGPA</TableColumn>
-                                                    <TableColumn className="px-2 sm:px-3 text-cyan-400 font-bold text-[14px] text-center">CGPA</TableColumn>
-                                                    <TableColumn className="px-2 sm:px-3 text-cyan-400 font-bold text-[14px] text-center">Earned Credits</TableColumn>
-                                                </TableHeader>
-                                                <TableBody>
+                                        <div className="bg-[#18181B] mx-2 mt-2 p-4 rounded-lg shadow-small">
+                                            <Table striped highlightOnHover className="text-center" withRowBorders={false} verticalSpacing="sm">
+                                                <Table.Thead>
+                                                    <Table.Tr>
+                                                        <Table.Th className="md:text-lg text-cyan-400 font-bold text-[14px] text-center">Semester</Table.Th>
+                                                        <Table.Th className="md:text-lg text-cyan-400 font-bold text-[14px] text-center">SGPA</Table.Th>
+                                                        <Table.Th className="md:text-lg text-cyan-400 font-bold text-[14px] text-center">CGPA</Table.Th>
+                                                        <Table.Th className="md:text-lg text-cyan-400 font-bold text-[14px] text-center">Earned Credits</Table.Th>
+                                                    </Table.Tr>
+                                                </Table.Thead>
+                                                <Table.Tbody>
                                                     {studentSgCgData.map((item, index) => (
-                                                        <TableRow key={index}>
-                                                            <TableCell>{item.stynumber}</TableCell>
-                                                            <TableCell>{item.sgpa_r}</TableCell>
-                                                            <TableCell>{item.cgpa_r}</TableCell>
-                                                            <TableCell>{item.totalearnedcredit}</TableCell>
-                                                        </TableRow>
+                                                        <Table.Tr key={index} className="md:text-base">
+                                                            <Table.Td>{item.stynumber}</Table.Td>
+                                                            <Table.Td>{item.sgpa_r}</Table.Td>
+                                                            <Table.Td>{item.cgpa_r}</Table.Td>
+                                                            <Table.Td>{item.totalearnedcredit}</Table.Td>
+                                                        </Table.Tr>
                                                     ))}
-                                                </TableBody>
+                                                </Table.Tbody>
                                             </Table>
                                         </div>
                                     )}
@@ -159,27 +160,32 @@ export default function Profile() {
                                         <Divider className='bg-sky-200 p-[1.5px] rounded-full' />
                                     </div>
                                     {gradesData.length > 0 && (
-                                        <div className="mt-2 mb-7">
-                                            <Accordion variant="splitted">
+                                        <div className="mt-2 mb-7 mx-2">
+                                            <Accordion variant="separated" radius="md" className="bg-[#18181B] p-4 rounded-lg shadow-small">
                                                 {gradesData.map((data, index) => (
-                                                    <AccordionItem key={index + 1} aria-label={`Accordion ${index + 1}`} title={`Semester ${nums[index]}`}>
-                                                        <Table removeWrapper isStriped key={index + 1} className="p-0">
-                                                            <TableHeader>
-                                                                <TableColumn className="px-2 sm:px-3 text-cyan-400 font-bold text-[14px]">Subject Code</TableColumn>
-                                                                <TableColumn className="px-2 sm:px-3 text-cyan-400 font-bold text-[14px]">Subject Description</TableColumn>
-                                                                <TableColumn className="px-2 sm:px-3 text-cyan-400 font-bold text-[14px]">Grade</TableColumn>
-                                                            </TableHeader>
-                                                            <TableBody>
-                                                                {data.map((subject, idx) => (
-                                                                    <TableRow key={idx}>
-                                                                        <TableCell>{subject.subjectcode}</TableCell>
-                                                                        <TableCell>{subject.subjectdesc}</TableCell>
-                                                                        <TableCell className={subject.grade === 'F' ? 'text-danger font-bold' : ''}>{subject.grade}</TableCell>
-                                                                    </TableRow>
-                                                                ))}
-                                                            </TableBody>
-                                                        </Table>
-                                                    </AccordionItem>
+                                                    <Accordion.Item key={index} value={`${nums[index]}`} className="border-none">
+                                                        <Accordion.Control className="" icon={emoji[index]}>Semester {nums[index]}</Accordion.Control>
+                                                        <Accordion.Panel className="break-normal ">
+                                                            <Table striped highlightOnHover withRowBorders={false} className="" verticalSpacing="sm">
+                                                                <Table.Thead>
+                                                                    <Table.Tr>
+                                                                        <Table.Th className="md:text-lg text-cyan-400 font-bold text-[14px]">Subject Code</Table.Th>
+                                                                        <Table.Th className="md:text-lg text-cyan-400 font-bold text-[14px]">Subject Description</Table.Th>
+                                                                        <Table.Th className="md:text-lg text-cyan-400 font-bold text-[14px]">Grade</Table.Th>
+                                                                    </Table.Tr>
+                                                                </Table.Thead>
+                                                                <Table.Tbody>
+                                                                    {data.map((subject, idx) => (
+                                                                        <Table.Tr key={idx} className="md:text-base">
+                                                                            <Table.Td>{subject.subjectcode}</Table.Td>
+                                                                            <Table.Td>{subject.subjectdesc}</Table.Td>
+                                                                            <Table.Td className={subject.grade === 'F' ? 'text-danger font-bold' : ''}>{subject.grade}</Table.Td>
+                                                                        </Table.Tr>
+                                                                    ))}
+                                                                </Table.Tbody>
+                                                            </Table>
+                                                        </Accordion.Panel>
+                                                    </Accordion.Item>
                                                 ))}
                                             </Accordion>
                                         </div>

@@ -1,5 +1,4 @@
 import Image from 'next/image'
-// import pacGhost from '../public/pacGhost.jpg'
 import pacGif from '../public/pacGif.gif' 
 import { motion } from 'framer-motion'
 

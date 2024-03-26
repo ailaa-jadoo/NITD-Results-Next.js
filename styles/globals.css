@@ -2,6 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+.fullScreen {
+    height: calc(100vh - 32px);
+}
+
 .c400{
     color: #22d3ee;
+}
+
+.mantine-Accordion-content{
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+}
+
+.mantine-Accordion-label{
+    font-size: 20px;
+    font-weight: 500;
 }
