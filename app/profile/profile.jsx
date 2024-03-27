@@ -1,9 +1,8 @@
 'use client'
 
 import { motion } from "framer-motion";
-import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 
 import { Accordion } from '@mantine/core';
 import { Table } from '@mantine/core';
@@ -27,7 +26,7 @@ export default function Profile() {
     const nums = ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight"]
     const emoji = ["🙂", "🤔", "😐", "😢", "😭", "🥴", "😵‍💫", "💀"]
 
-    const fetchData = async () => {
+    const memoizedFetchData = useMemo(() => async () => {
         try {
             const response = await fetch(`/api/handleStuId?rollNumber=${rollNumber}`);
             if (!response.ok) {
@@ -36,21 +35,21 @@ export default function Profile() {
             }
             const data = await response.text();
             setStudentId(data);
-            const [stuDatanSgCg, grades] = await Promise.all([
-                fetch(`/api/handleStuDataNSgSg?studentID=${data}`),
-                fetch(`/api/handleSemGrades?studentID=${data}`)
-            ]);
-            if (!stuDatanSgCg.ok || !grades.ok) {
+            const stuDatanSgCg = await fetch(`/api/handleStuDataNSgSg?studentID=${data}`);
+            if (!stuDatanSgCg.ok) {
                 setError(true);
                 throw new Error('Failed to fetch data');
             }
-            const [stuDatanSgCgRes, gradesData] = await Promise.all([
-                stuDatanSgCg.json(),
-                grades.json()
-            ]);
+            const stuDatanSgCgRes = await stuDatanSgCg.json();
             const { studentData, sgcgData } = stuDatanSgCgRes;
             setStudentData(studentData);
             setStudentSgCgData(sgcgData);
+            const semNum = sgcgData.length;
+            const grades = await fetch(`/api/handleSemGrades?studentID=${data}&semNum=${semNum}`);
+            if (!grades.ok) {
+                throw new Error('Failed to fetch data');
+            }
+            const gradesData = await grades.json();
             setGradesData(gradesData);
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -58,13 +57,13 @@ export default function Profile() {
             setIsLoading(false);
             setIsContentVisible(true);
         }
-    };
+    }, [rollNumber]);
 
     useEffect(() => {
         if (rollNumber) {
-            fetchData();
+          memoizedFetchData();
         }
-    }, [rollNumber]);
+      }, [rollNumber, memoizedFetchData]);
 
     return (
         <div className="overflow-x-hidden">
