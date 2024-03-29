@@ -90,7 +90,7 @@ export default function Profile() {
                             </div>
                             {studentData.length > 0 && (
                                 <div className="bg-[#18181B] m-2 p-4 rounded-lg shadow-small grid md:grid-cols-2 gap-3">
-                                    <p><span className="c400 font-bold">Name -</span> {studentData[0].name}</p>
+                                    <p><span className="c400 font-bold">Name -</span> {studentData[0].name.toLowerCase().replace(/(^|\s)\S/g, char => char.toUpperCase())}</p>
                                     <p><span className="c400 font-bold">Roll No. -</span> {studentData[0].registrationno}</p>
                                     <p><span className="c400 font-bold">Programme -</span> {studentData[0].programme}</p>
                                     <p><span className="c400 font-bold">Branch -</span> {studentData[0].branch}</p>
