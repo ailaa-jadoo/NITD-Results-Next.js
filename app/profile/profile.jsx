@@ -72,7 +72,7 @@ export default function Profile() {
             {isLoading ? (
                 <Shadow />
             ) : (
-                <Card isBlurred className="border-none max-w-4xl lg:max-w-4xl md:max-w-3xl sm:max-w-xl mx-auto my-4 mt-28" shadow="sm">
+                <Card isBlurred className="border-none max-w-4xl lg:max-w-4xl md:max-w-3xl sm:max-w-xl mx-auto my-4 mt-32" shadow="sm">
                     <CardBody className="sm:p-3 p-0">
                         <motion.div
                             initial={{ opacity: 0 }}

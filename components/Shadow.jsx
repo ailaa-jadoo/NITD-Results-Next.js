@@ -10,7 +10,7 @@ const items = Array.from({ length: 4 }, (_, index) => (
 
 export default function Shadow() {
     return (
-        <div className="mt-28">
+        <div className="mt-32">
             <motion.div
                 initial={{ x: -1000, scale: 0 }}
                 animate={{
