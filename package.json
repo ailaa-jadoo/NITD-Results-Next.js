@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbopack",
     "build": "next build",
     "start": "cross-env NODE_TLS_REJECT_UNAUTHORIZED=0 next dev",
     "lint": "next lint"
@@ -27,19 +27,19 @@
     "@react-hook/media-query": "^1.1.1",
     "@react-stately/data": "^3.11.2",
     "@types/node": "20.5.7",
-    "@types/react": "18.2.21",
-    "@types/react-dom": "18.2.7",
+    "@types/react": "19.1.13",
+    "@types/react-dom": "19.1.9",
     "autoprefixer": "10.4.16",
     "clsx": "^2.0.0",
     "eslint": "8.48.0",
-    "eslint-config-next": "14.0.2",
+    "eslint-config-next": "15.5.3",
     "framer-motion": "^10.18.0",
     "intl-messageformat": "^10.5.0",
-    "next": "14.0.2",
+    "next": "15.5.3",
     "next-themes": "^0.2.1",
     "node-fetch": "^3.3.2",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
     "tailwind-variants": "^0.1.18",
     "tailwindcss": "3.3.5",
     "typescript": "5.0.4"
@@ -49,5 +49,9 @@
     "postcss": "^8.4.38",
     "postcss-preset-mantine": "^1.13.0",
     "postcss-simple-vars": "^7.0.1"
+  },
+  "overrides": {
+    "@types/react": "19.1.13",
+    "@types/react-dom": "19.1.9"
   }
 }

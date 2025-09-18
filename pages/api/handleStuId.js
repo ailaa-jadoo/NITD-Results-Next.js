@@ -17,8 +17,8 @@ const handler = async (req, res) => {
             'Connection': 'keep-alive',
             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
             'Cookie': 'JSESSIONID=-q5TugmDOh-do992E5EfjUcw.undefined',
-            'Origin': 'https://erp.nitdelhi.ac.in',
-            'Referer': 'https://erp.nitdelhi.ac.in/CampusLynxNITD/student/result.jsp',
+            'Origin': 'https://115.248.191.12',
+            'Referer': 'https://115.248.191.12/CampusLynxNITD/student/result.jsp',
             'Sec-Fetch-Dest': 'empty',
             'Sec-Fetch-Mode': 'cors',
             'Sec-Fetch-Site': 'same-origin',
@@ -29,7 +29,7 @@ const handler = async (req, res) => {
         body: `jdata={"sid":"validate","instituteID":"NITDINSD1506A0000001","studentrollno":"${rollNumber}"}`
     }
 
-    const fetchUrl = "https://erp.nitdelhi.ac.in/CampusLynxNITD/CounsellingRequest?sid=validate&refor=StudentOnlineDetailService";
+    const fetchUrl = "https://115.248.191.12/CampusLynxNITD/CounsellingRequest?sid=validate&refor=StudentOnlineDetailService";
 
     try {
         const response = await fetch(fetchUrl, options, { cache: 'force-cache' });

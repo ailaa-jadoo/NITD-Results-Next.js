@@ -24,7 +24,7 @@ const handler = async (req, res) => {
             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
             'Cookie': 'JSESSIONID=-q5TugmDOh-do992E5EfjUcw.undefined',
             'Origin': 'https://erp.nitdelhi.ac.in',
-            'Referer': 'https://erp.nitdelhi.ac.in/CampusLynxNITD/student/result.jsp',
+            'Referer': 'https://115.248.191.12/CampusLynxNITD/student/result.jsp',
             'Sec-Fetch-Dest': 'empty',
             'Sec-Fetch-Mode': 'cors',
             'Sec-Fetch-Site': 'same-origin',
@@ -35,7 +35,7 @@ const handler = async (req, res) => {
         body: `jdata={"sid":"2003","mname":"studentGrade","studentID":"${studentID}","instituteID":"NITDINSD1506A0000001","stynumber":${i + 1}}`,
         agent
       };
-      return fetch("https://erp.nitdelhi.ac.in/CampusLynxNITD/CounsellingRequest?sid=2003&refor=StudentSeatingMasterService", requestOptions, { cache: 'force-cache' })
+      return fetch("https://115.248.191.12/CampusLynxNITD/CounsellingRequest?sid=2003&refor=StudentSeatingMasterService", requestOptions, { cache: 'force-cache' })
         .then(response => {
           if (!response.ok) {
             throw new Error(`Failed to fetch data for stynumber ${i + 1}`);

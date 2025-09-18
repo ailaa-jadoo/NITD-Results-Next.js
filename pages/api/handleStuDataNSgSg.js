@@ -16,7 +16,7 @@ const handler = async (req, res) => {
             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
             'Cookie': 'JSESSIONID=-q5TugmDOh-do992E5EfjUcw.undefined',
             'Origin': 'https://erp.nitdelhi.ac.in',
-            'Referer': 'https://erp.nitdelhi.ac.in/CampusLynxNITD/student/result.jsp',
+            'Referer': 'https://115.248.191.12/CampusLynxNITD/student/result.jsp',
             'Sec-Fetch-Dest': 'empty',
             'Sec-Fetch-Mode': 'cors',
             'Sec-Fetch-Site': 'same-origin',
@@ -27,8 +27,8 @@ const handler = async (req, res) => {
         body: `jdata={"sid":"2002","mname":"ExamSgpaCgpaDetailOfStudent","studentID":"${studentID}","instituteID":"NITDINSD1506A0000001","registrationID":"NITDRETD2208A0000001"}`
     };
 
-    const fetchUrl1 = "https://erp.nitdelhi.ac.in/CampusLynxNITD/CounsellingRequest?sid=2002&refor=StudentSeatingMasterService";
-    const fetchUrl2 = "https://erp.nitdelhi.ac.in/CampusLynxNITD/CounsellingRequest?sid=2005&refor=StudentSeatingMasterService";
+    const fetchUrl1 = "https://115.248.191.12/CampusLynxNITD/CounsellingRequest?sid=2002&refor=StudentSeatingMasterService";
+    const fetchUrl2 = "https://115.248.191.12/CampusLynxNITD/CounsellingRequest?sid=2005&refor=StudentSeatingMasterService";
 
     try {
         const [response1, response2] = await Promise.all([
