@@ -200,5 +200,3 @@ export default function Profile() {
         </div>
     );
 }
-
-export const revalidate = 3600
